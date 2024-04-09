@@ -41,7 +41,7 @@ generator go-jet {
 
 After generating the code, you can use it within your Go project.
 The generated code includes models, tables, and enums based on your Prisma schema.
-For more information how to use this, read the [go-jet documentation](https://github.com/go-jet/jet)
+For more information how to use this, read the [go-jet documentation](https://github.com/go-jet/jet).
 
 ## Contributing
 
@@ -87,4 +87,3 @@ see the [LICENSE](LICENSE) file for details.
   [prisma-kysely](https://github.com/valtyr/prisma-kysely),
   [zod-prisma-types](https://github.com/chrishoermann/zod-prisma-types/tree/master),
   and more, so thanks for creating awesome generators for Prisma!
--
