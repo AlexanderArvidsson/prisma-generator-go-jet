@@ -1,15 +1,29 @@
-import { generatorHandler, GeneratorOptions } from '@prisma/generator-helper'
-import { logger } from '@prisma/sdk'
-import path from 'path'
-import { GENERATOR_NAME } from './constants'
-import { genEnum } from './helpers/genEnum'
-import { writeFileSafely } from './utils/writeFileSafely'
+import { createPrismaSchemaBuilder } from '@mrleebo/prisma-ast'
+import helper, { DMMF, GeneratorOptions } from '@prisma/generator-helper'
+import { version } from '../package.json'
+import { GENERATOR_NAME } from './constants.js'
+import { generateModel } from './generators/model.js'
+import { generateTable } from './generators/table.js'
+import { generateEnum } from './generators/enum.js'
 
-const { version } = require('../package.json')
+const { generatorHandler } = helper
+
+export type GeneratorConfig = {
+  outputModels: string
+  outputTables: string
+  outputEnums: string
+  schemaName: string
+}
+
+const defaultConfig: GeneratorConfig = {
+  outputModels: 'model/',
+  outputTables: 'table/',
+  outputEnums: 'enum/',
+  schemaName: 'public',
+}
 
 generatorHandler({
   onManifest() {
-    logger.info(`${GENERATOR_NAME}:Registered`)
     return {
       version,
       defaultOutput: '../generated',
@@ -17,15 +31,26 @@ generatorHandler({
     }
   },
   onGenerate: async (options: GeneratorOptions) => {
-    options.dmmf.datamodel.enums.forEach(async (enumInfo) => {
-      const tsEnum = genEnum(enumInfo)
+    const config = {
+      ...defaultConfig,
+      ...(options.generator.config as GeneratorConfig),
+    }
 
-      const writeLocation = path.join(
-        options.generator.output?.value!,
-        `${enumInfo.name}.ts`,
-      )
+    const builder = createPrismaSchemaBuilder(options.datamodel)
 
-      await writeFileSafely(writeLocation, tsEnum)
-    })
+    const output = options.generator.output?.value!
+
+    const models = options.dmmf.datamodel.models
+    const enums = options.dmmf.datamodel.enums
+
+    await Promise.all([
+      ...models.map(async (model) => {
+        await generateModel(model, config, builder, output)
+        await generateTable(model, config, builder, output)
+      }),
+      ...enums.map(async (datamodelEnum: DMMF.DatamodelEnum) => {
+        await generateEnum(datamodelEnum, config, output)
+      }),
+    ])
   },
 })

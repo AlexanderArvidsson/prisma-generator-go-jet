@@ -1,0 +1,63 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`enum generation > generates all dmmf enums > Language 1`] = `
+"package enum
+
+import "github.com/go-jet/jet/v2/postgres"
+
+var Language = &struct {
+  Typescript postgres.StringExpression
+  Javascript postgres.StringExpression
+  Rust postgres.StringExpression
+  Go postgres.StringExpression
+  Python postgres.StringExpression
+  Cpp postgres.StringExpression
+}{
+  Typescript: postgres.NewEnumValue("Typescript"),
+  Javascript: postgres.NewEnumValue("Javascript"),
+  Rust: postgres.NewEnumValue("Rust"),
+  Go: postgres.NewEnumValue("Go"),
+  Python: postgres.NewEnumValue("Python"),
+  Cpp: postgres.NewEnumValue("Cpp"),
+}"
+`;
+
+exports[`enum generation > generates all dmmf enums > NotificationType 1`] = `
+"package enum
+
+import "github.com/go-jet/jet/v2/postgres"
+
+var NotificationType = &struct {
+  NewPosts postgres.StringExpression
+  NewComments postgres.StringExpression
+  NewFollowers postgres.StringExpression
+  Reply postgres.StringExpression
+  HeartOnPost postgres.StringExpression
+  HeartOnComment postgres.StringExpression
+  HeartOnReply postgres.StringExpression
+}{
+  NewPosts: postgres.NewEnumValue("newPosts"),
+  NewComments: postgres.NewEnumValue("newComments"),
+  NewFollowers: postgres.NewEnumValue("newFollowers"),
+  Reply: postgres.NewEnumValue("reply"),
+  HeartOnPost: postgres.NewEnumValue("heartOnPost"),
+  HeartOnComment: postgres.NewEnumValue("heartOnComment"),
+  HeartOnReply: postgres.NewEnumValue("heartOnReply"),
+}"
+`;
+
+exports[`enum generation > generates all dmmf enums > State 1`] = `
+"package enum
+
+import "github.com/go-jet/jet/v2/postgres"
+
+var State = &struct {
+  Active postgres.StringExpression
+  Pending postgres.StringExpression
+  Banned postgres.StringExpression
+}{
+  Active: postgres.NewEnumValue("Active"),
+  Pending: postgres.NewEnumValue("Pending"),
+  Banned: postgres.NewEnumValue("Banned"),
+}"
+`;

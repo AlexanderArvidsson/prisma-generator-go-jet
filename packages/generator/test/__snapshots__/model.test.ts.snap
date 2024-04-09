@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`model generation > generates all dmmf models > User 1`] = `
+"package model
+
+
+
+type User struct {
+  ID int32 \`sql:"primary_key"\`
+  Email string
+  Name *string
+}"
+`;
