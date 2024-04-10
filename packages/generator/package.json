@@ -1,7 +1,7 @@
 {
   "name": "prisma-generator-go-jet",
   "description": "Provide a description about your generator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "main": "dist/prisma-generator-go-jet.esm.js",
   "module": "dist/prisma-generator-go-jet.esm.js",
