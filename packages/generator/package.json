@@ -22,6 +22,7 @@
     "dev": "dts watch --format esm",
     "build": "dts build --format esm",
     "lint": "dts lint",
+    "prepack": "cp ../../{README.md,LICENSE} .",
     "prepare": "dts build",
     "test": "vitest"
   },
@@ -49,11 +50,11 @@
     "typescript": "5.4.5",
     "vitest": "^1.4.0"
   },
-  "homepage": "Link to homepage or github readme here",
+  "homepage": "https://github.com/alexanderArvidsson/prisma-generator-go-jet",
   "author": "Alexander Arvidsson",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alexanderArvidsson/prisma-generator-go-jet"
+    "url": "git+https://github.com/alexanderArvidsson/prisma-generator-go-jet.git"
   },
   "keywords": [
     "prisma",
