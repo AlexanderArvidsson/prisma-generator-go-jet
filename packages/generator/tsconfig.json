@@ -10,5 +10,5 @@
     "typeRoots": [],
     "types": []
   },
-  "exclude": ["vite.config.ts", "test"]
+  "exclude": ["vite.config.ts", "test", "bin"]
 }

@@ -2,9 +2,9 @@ import { createPrismaSchemaBuilder } from '@mrleebo/prisma-ast'
 import helper, { DMMF, GeneratorOptions } from '@prisma/generator-helper'
 import { version } from '../package.json'
 import { GENERATOR_NAME } from './constants.js'
-import { generateModel } from './generators/model.js'
-import { generateTable } from './generators/table.js'
 import { generateEnum } from './generators/enum.js'
+import { generateModel } from './generators/model.js'
+import { generateTable, generateTableUseSchema } from './generators/table.js'
 
 const { generatorHandler } = helper
 
@@ -51,6 +51,7 @@ generatorHandler({
       ...enums.map(async (datamodelEnum: DMMF.DatamodelEnum) => {
         await generateEnum(datamodelEnum, config, output)
       }),
+      generateTableUseSchema(models, config, output),
     ])
   },
 })

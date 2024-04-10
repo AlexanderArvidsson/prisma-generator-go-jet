@@ -1,9 +1,9 @@
 import { DMMF } from '@prisma/generator-helper'
-import { getEnumMemberName, getEnumName } from '../helpers/format.js'
-import { GeneratorConfig } from '../generator.js'
-import { OUTPUT_HEADER } from '../constants.js'
-import { writeFileSafely } from '../utils/writeFileSafely.js'
 import path from 'path'
+import { OUTPUT_HEADER } from '../constants.js'
+import { GeneratorConfig } from '../generator.js'
+import { getEnumMemberName, getEnumName } from '../helpers/format.js'
+import { writeFileSafely } from '../utils/writeFileSafely.js'
 
 export type EnumMember = {
   name: string

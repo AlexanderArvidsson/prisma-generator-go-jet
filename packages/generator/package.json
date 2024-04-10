@@ -11,6 +11,7 @@
     "prisma-generator-go-jet": "bin/cli.js"
   },
   "files": [
+    "bin",
     "dist"
   ],
   "engines": {

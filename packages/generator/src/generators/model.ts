@@ -1,10 +1,10 @@
 import { DMMF } from '@prisma/generator-helper'
-import { SchemaBuilder } from '../helpers/schema.js'
-import { formatField, getModelName } from '../helpers/format.js'
-import { writeFileSafely } from '../utils/writeFileSafely.js'
-import { GeneratorConfig } from '../generator.js'
 import path from 'path'
 import { OUTPUT_HEADER } from '../constants.js'
+import { GeneratorConfig } from '../generator.js'
+import { formatField, getModelName } from '../helpers/format.js'
+import { SchemaBuilder } from '../helpers/schema.js'
+import { writeFileSafely } from '../utils/writeFileSafely.js'
 
 export type ModelField = {
   name: string

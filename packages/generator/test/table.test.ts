@@ -1,6 +1,6 @@
 import { createPrismaSchemaBuilder } from '@mrleebo/prisma-ast'
 import { describe, expect, it } from 'vitest'
-import { renderTable } from '../src/generators/table'
+import { renderTable, renderTableUseSchema } from '../src/generators/table'
 import { getSampleDMMF, samplePrismaSchema } from './__fixtures__/getSampleDMMF'
 
 describe('model generation', () => {
@@ -14,5 +14,13 @@ describe('model generation', () => {
         model.name,
       )
     })
+  })
+
+  it('generates UseSchema function', async () => {
+    const sampleDMMF = await getSampleDMMF()
+
+    expect(
+      renderTableUseSchema(sampleDMMF.datamodel.models, 'table'),
+    ).toMatchSnapshot('table_use_schema')
   })
 })

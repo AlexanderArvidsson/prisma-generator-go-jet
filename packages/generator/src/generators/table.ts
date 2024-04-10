@@ -1,11 +1,12 @@
-import { DMMF } from '@prisma/generator-helper'
+import { DMMF, ReadonlyDeep } from '@prisma/generator-helper'
 import path from 'path'
+import { GeneratorConfig } from '../generator.js'
 import { OUTPUT_HEADER } from './../constants.js'
 import { formatField, getModelName } from './../helpers/format.js'
 import { SchemaBuilder } from './../helpers/schema.js'
 import { pgTypeMap } from './../helpers/types.js'
 import { writeFileSafely } from './../utils/writeFileSafely.js'
-import { GeneratorConfig } from '../generator.js'
+
 export type TableColumn = {
   name: string
   columnName: string
@@ -17,6 +18,7 @@ export type RenderTableTemplateOptions = {
   packageName: string
   modelName: string
   schemaName: string
+  alias?: string
   tableName: string
   privateModelName: string
   columns: TableColumn[]
@@ -27,6 +29,7 @@ export function renderTableTemplate({
   modelName,
   schemaName,
   tableName,
+  alias = '',
   privateModelName,
   columns,
 }: RenderTableTemplateOptions) {
@@ -36,7 +39,7 @@ import (
 	"github.com/go-jet/jet/v2/postgres"
 )
 
-var ${modelName} = new${modelName}Table("${schemaName}", "${tableName}", "")
+var ${modelName} = new${modelName}Table("${schemaName}", "${tableName}", "${alias}")
 
 type ${privateModelName}Table struct {
 	postgres.Table
@@ -136,6 +139,7 @@ export function renderTable(
     privateModelName,
     schemaName,
     tableName,
+    alias: modelName,
     packageName,
     columns,
   })
@@ -157,6 +161,39 @@ export async function generateTable(
   const packageName = path.basename(path.dirname(location))
 
   const content = renderTable(model, builder, config.schemaName, packageName)
+
+  await writeFileSafely(location, content, { header: OUTPUT_HEADER })
+}
+
+export function renderTableUseSchema(
+  models: ReadonlyDeep<DMMF.Model[]>,
+  packageName: string,
+) {
+  const modelsStr = models
+    .map((model) => {
+      const modelName = getModelName(model)
+      return `  ${modelName} = ${modelName}.FromSchema(schema)`
+    })
+    .join('\n')
+
+  return `package ${packageName}
+
+// UseSchema sets a new schema name for all generated table SQL builder types. It is recommended to invoke
+// this method only once at the beginning of the program.
+func UseSchema(schema string) {
+${modelsStr}
+}`
+}
+
+export async function generateTableUseSchema(
+  models: ReadonlyDeep<DMMF.Model[]>,
+  config: GeneratorConfig,
+  output: string,
+) {
+  const location = path.join(output, config.outputTables, 'table_use_schema.go')
+  const packageName = path.basename(path.dirname(location))
+
+  const content = renderTableUseSchema(models, packageName)
 
   await writeFileSafely(location, content, { header: OUTPUT_HEADER })
 }

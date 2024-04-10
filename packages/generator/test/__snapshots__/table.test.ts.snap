@@ -1,5 +1,90 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`model generation > generates UseSchema function > table_use_schema 1`] = `
+"package table
+
+// UseSchema sets a new schema name for all generated table SQL builder types. It is recommended to invoke
+// this method only once at the beginning of the program.
+func UseSchema(schema string) {
+  User = User.FromSchema(schema)
+  Post = Post.FromSchema(schema)
+}"
+`;
+
+exports[`model generation > generates all dmmf models > Post 1`] = `
+"package table
+
+import (
+	"github.com/go-jet/jet/v2/postgres"
+)
+
+var Post = newPostTable("public", "post_table", "Post")
+
+type postTable struct {
+	postgres.Table
+
+	// Columns
+  ID postgres.ColumnInteger
+  AuthorID postgres.ColumnInteger
+
+	AllColumns     postgres.ColumnList
+	MutableColumns postgres.ColumnList
+}
+
+type PostTable struct {
+	postTable
+
+	EXCLUDED postTable
+}
+
+// AS creates new PostTable with assigned alias
+func (a PostTable) AS(alias string) *PostTable {
+	return newPostTable(a.SchemaName(), a.TableName(), alias)
+}
+
+// Schema creates new PostTable with assigned schema name
+func (a PostTable) FromSchema(schemaName string) *PostTable {
+	return newPostTable(schemaName, a.TableName(), a.Alias())
+}
+
+// WithPrefix creates new PostTable with assigned table prefix
+func (a PostTable) WithPrefix(prefix string) *PostTable {
+	return newPostTable(a.SchemaName(), prefix+a.TableName(), a.TableName())
+}
+
+// WithSuffix creates new PostTable with assigned table suffix
+func (a PostTable) WithSuffix(suffix string) *PostTable {
+	return newPostTable(a.SchemaName(), a.TableName()+suffix, a.TableName())
+}
+
+func newPostTable(schemaName, tableName, alias string) *PostTable {
+	return &PostTable{
+		postTable: newPostTableImpl(schemaName, tableName, alias),
+		EXCLUDED: newPostTableImpl("", "excluded", ""),
+	}
+}
+
+func newPostTableImpl(schemaName, tableName, alias string) postTable {
+	var (
+    IDColumn = postgres.IntegerColumn("id")
+    AuthorIDColumn = postgres.IntegerColumn("authorId")
+		allColumns                     = postgres.ColumnList{IDColumn, AuthorIDColumn}
+		mutableColumns                 = postgres.ColumnList{AuthorIDColumn}
+	)
+
+	return postTable{
+		Table: postgres.NewTable(schemaName, tableName, alias, allColumns...),
+
+		//Columns
+    ID: IDColumn,
+    AuthorID: AuthorIDColumn,
+
+		AllColumns:     allColumns,
+		MutableColumns: mutableColumns,
+	}
+}"
+`;
+
 exports[`model generation > generates all dmmf models > User 1`] = `
 "package table
 
@@ -7,7 +92,7 @@ import (
 	"github.com/go-jet/jet/v2/postgres"
 )
 
-var User = newUserTable("public", "User", "")
+var User = newUserTable("public", "User", "User")
 
 type userTable struct {
 	postgres.Table
