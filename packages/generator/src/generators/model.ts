@@ -38,7 +38,12 @@ export function renderModelTemplate({
 ${importsStr}
 
 type ${modelName} struct {
-  ${fields.map(({ name, type, tags }) => `${name} ${type}` + (tags.length > 0 ? ` \`${tags.join(' ')}\`` : '')).join('\n  ')}
+  ${fields
+    .map(
+      ({ name, type, tags }) =>
+        `${name} ${type}` + (tags.length > 0 ? ` \`${tags.join(' ')}\`` : ''),
+    )
+    .join('\n  ')}
 }`
 }
 

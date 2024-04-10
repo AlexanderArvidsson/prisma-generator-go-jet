@@ -26,9 +26,15 @@ export function renderEnumTemplate({
 import "github.com/go-jet/jet/v2/postgres"
 
 var ${enumName} = &struct {
-  ${members.map((member) => `${member.name} postgres.StringExpression`).join('\n  ')}
+  ${members
+    .map((member) => `${member.name} postgres.StringExpression`)
+    .join('\n  ')}
 }{
-  ${members.map((member) => `${member.name}: postgres.NewEnumValue("${member.value}"),`).join('\n  ')}
+  ${members
+    .map(
+      (member) => `${member.name}: postgres.NewEnumValue("${member.value}"),`,
+    )
+    .join('\n  ')}
 }`
 }
 

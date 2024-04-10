@@ -5,6 +5,7 @@ import { GENERATOR_NAME } from './constants.js'
 import { generateEnum } from './generators/enum.js'
 import { generateModel } from './generators/model.js'
 import { generateTable, generateTableUseSchema } from './generators/table.js'
+import { cleanGoFilesSafe } from './helpers/clean.js'
 
 const { generatorHandler } = helper
 
@@ -42,6 +43,12 @@ generatorHandler({
 
     const models = options.dmmf.datamodel.models
     const enums = options.dmmf.datamodel.enums
+
+    await Promise.all([
+      cleanGoFilesSafe(output, config.outputModels),
+      cleanGoFilesSafe(output, config.outputTables),
+      cleanGoFilesSafe(output, config.outputEnums),
+    ])
 
     await Promise.all([
       ...models.map(async (model) => {

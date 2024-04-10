@@ -86,8 +86,15 @@ func new${modelName}Table(schemaName, tableName, alias string) *${modelName}Tabl
 
 func new${modelName}TableImpl(schemaName, tableName, alias string) ${privateModelName}Table {
 	var (
-    ${columns.map((column) => `${column.name}Column = postgres.${column.type}Column("${column.columnName}")`).join('\n    ')}
-		allColumns                     = postgres.ColumnList{${columns.map((column) => `${column.name}Column`).join(', ')}}
+    ${columns
+      .map(
+        (column) =>
+          `${column.name}Column = postgres.${column.type}Column("${column.columnName}")`,
+      )
+      .join('\n    ')}
+		allColumns                     = postgres.ColumnList{${columns
+      .map((column) => `${column.name}Column`)
+      .join(', ')}}
 		mutableColumns                 = postgres.ColumnList{${columns
       .filter((column) => column.mutable)
       .map((column) => `${column.name}Column`)
@@ -98,7 +105,9 @@ func new${modelName}TableImpl(schemaName, tableName, alias string) ${privateMode
 		Table: postgres.NewTable(schemaName, tableName, alias, allColumns...),
 
 		//Columns
-    ${columns.map((column) => `${column.name}: ${column.name}Column,`).join('\n    ')}
+    ${columns
+      .map((column) => `${column.name}: ${column.name}Column,`)
+      .join('\n    ')}
 
 		AllColumns:     allColumns,
 		MutableColumns: mutableColumns,
