@@ -7,7 +7,7 @@ import { SchemaBuilder } from './schema.js'
 
 export const getFieldName = (field: DMMF.Field) => {
   // Go requires PascaleCase for exported fields
-  let name = pascalCase(field.name)
+  let name = pascalCase(field.name, { mergeAmbiguousCharacters: true })
 
   // Certain field names should be mapped to different name
   if (name.endsWith('Id')) name = name.substring(0, name.length - 2) + 'ID'

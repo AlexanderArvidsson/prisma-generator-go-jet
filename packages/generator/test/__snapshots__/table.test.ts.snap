@@ -107,6 +107,7 @@ type userTable struct {
   ID postgres.ColumnInteger
   Email postgres.ColumnString
   Name postgres.ColumnString
+  Enable2fa postgres.ColumnBool
 
 	AllColumns     postgres.ColumnList
 	MutableColumns postgres.ColumnList
@@ -150,8 +151,9 @@ func newUserTableImpl(schemaName, tableName, alias string) userTable {
     IDColumn = postgres.IntegerColumn("id")
     EmailColumn = postgres.StringColumn("email")
     NameColumn = postgres.StringColumn("name")
-		allColumns                     = postgres.ColumnList{IDColumn, EmailColumn, NameColumn}
-		mutableColumns                 = postgres.ColumnList{EmailColumn, NameColumn}
+    Enable2faColumn = postgres.BoolColumn("enable_2fa")
+		allColumns                     = postgres.ColumnList{IDColumn, EmailColumn, NameColumn, Enable2faColumn}
+		mutableColumns                 = postgres.ColumnList{EmailColumn, NameColumn, Enable2faColumn}
 	)
 
 	return userTable{
@@ -161,6 +163,7 @@ func newUserTableImpl(schemaName, tableName, alias string) userTable {
     ID: IDColumn,
     Email: EmailColumn,
     Name: NameColumn,
+    Enable2fa: Enable2faColumn,
 
 		AllColumns:     allColumns,
 		MutableColumns: mutableColumns,

@@ -8,6 +8,8 @@ model User {
   email String  @unique
   name  String?
   Post  Post[]
+
+  enable_2fa Boolean
 }
 
 model Post {
