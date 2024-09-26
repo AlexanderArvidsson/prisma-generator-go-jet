@@ -42,6 +42,11 @@ export const getFieldType = (field: DMMF.Field, schemaField: Field | null) => {
     }
   })
 
+  // List types are arrays
+  if (field.isList) {
+    fieldType = fieldType + '[]'
+  }
+
   let type = goTypeMap[fieldType] ?? goTypeMap.Unsupported
 
   // Nullable types are pointers
@@ -84,6 +89,8 @@ export const formatField = (
 
   const typeImport = goTypeImportMap[fieldType]
   const tags: string[] = []
+
+  if (field.name === 'keywords') console.log(field.name, fieldType, type)
 
   // ID tags are primary keys
   if (field.isId) {

@@ -6236,6 +6236,17 @@ prettysize@^2.0.0:
   resolved "https://registry.yarnpkg.com/prettysize/-/prettysize-2.0.0.tgz#902c02480d865d9cc0813011c9feb4fa02ce6996"
   integrity sha512-VVtxR7sOh0VsG8o06Ttq5TrI1aiZKmC+ClSn4eBPaNf4SHr5lzbYW+kYGX3HocBL/MfpVrRfFZ9V3vCbLaiplg==
 
+prisma-generator-go-jet@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/prisma-generator-go-jet/-/prisma-generator-go-jet-0.0.1.tgz#180e182e467656c8f6ab08def8f631991967dd18"
+  integrity sha512-R7AhkNetRflFD0dDTAGFRvBTjhmMyANPA/M+gimqBb1YnhYZmxmzoDybuA82nb/gd7Vf1Xja1P5U8bT4A+9ygw==
+  dependencies:
+    "@mrleebo/prisma-ast" "^0.12.0"
+    "@prisma/generator-helper" "^5.12.1"
+    "@prisma/sdk" "3.15.2"
+    change-case "^5.4.4"
+    rimraf "^5.0.5"
+
 prisma@5.12.1, prisma@^5.12.1:
   version "5.12.1"
   resolved "https://registry.yarnpkg.com/prisma/-/prisma-5.12.1.tgz#db4596253bb066afc9f08744642f200a398d8d51"

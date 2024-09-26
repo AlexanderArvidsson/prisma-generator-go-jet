@@ -16,6 +16,9 @@ model Post {
   authorId Int
   author   User @relation(fields: [authorId], references: [id])
 
+  keywords String[] @db.VarChar(254)
+  numbers  Int[]
+
   @@map("post_table")
 }
 

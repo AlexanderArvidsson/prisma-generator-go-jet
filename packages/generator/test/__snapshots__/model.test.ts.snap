@@ -3,11 +3,15 @@
 exports[`model generation > generates all dmmf models > Post 1`] = `
 "package model
 
-
+import (
+  "github.com/lib/pq"
+)
 
 type Post struct {
   ID int32 \`sql:"primary_key"\`
   AuthorID int32
+  Keywords pq.StringArray
+  Numbers pq.IntArray
 }"
 `;
 

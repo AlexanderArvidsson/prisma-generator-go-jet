@@ -28,11 +28,15 @@ export const goTypeMap: TypeMap = {
   UnsignedSmallInt: 'uint16',
   SmallInt: 'int16',
   UUID: 'uuid.UUID',
+  'String[]': 'pq.StringArray',
+  'Int[]': 'pq.IntArray',
 }
 
 export const goTypeImportMap: TypeMap = {
   DateTime: 'time',
   UUID: 'github.com/google/uuid',
+  'String[]': 'github.com/lib/pq',
+  'Int[]': 'github.com/lib/pq',
 }
 
 export const goAttributeTypeMap: TypeMap = {

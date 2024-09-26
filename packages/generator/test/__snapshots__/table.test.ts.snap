@@ -26,6 +26,8 @@ type postTable struct {
 	// Columns
   ID postgres.ColumnInteger
   AuthorID postgres.ColumnInteger
+  Keywords postgres.ColumnString
+  Numbers postgres.ColumnInteger
 
 	AllColumns     postgres.ColumnList
 	MutableColumns postgres.ColumnList
@@ -68,8 +70,10 @@ func newPostTableImpl(schemaName, tableName, alias string) postTable {
 	var (
     IDColumn = postgres.IntegerColumn("id")
     AuthorIDColumn = postgres.IntegerColumn("authorId")
-		allColumns                     = postgres.ColumnList{IDColumn, AuthorIDColumn}
-		mutableColumns                 = postgres.ColumnList{AuthorIDColumn}
+    KeywordsColumn = postgres.StringColumn("keywords")
+    NumbersColumn = postgres.IntegerColumn("numbers")
+		allColumns                     = postgres.ColumnList{IDColumn, AuthorIDColumn, KeywordsColumn, NumbersColumn}
+		mutableColumns                 = postgres.ColumnList{AuthorIDColumn, KeywordsColumn, NumbersColumn}
 	)
 
 	return postTable{
@@ -78,6 +82,8 @@ func newPostTableImpl(schemaName, tableName, alias string) postTable {
 		//Columns
     ID: IDColumn,
     AuthorID: AuthorIDColumn,
+    Keywords: KeywordsColumn,
+    Numbers: NumbersColumn,
 
 		AllColumns:     allColumns,
 		MutableColumns: mutableColumns,
